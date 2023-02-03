@@ -1,0 +1,23 @@
+{
+  "name": "eciexport",
+  "version": "1.0.0",
+  "description": "Generates XML ",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fixthestatusquo/eciexport.git"
+  },
+  "author": "Proca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fixthestatusquo/eciexport/issues"
+  },
+  "homepage": "https://github.com/fixthestatusquo/eciexport#readme",
+  "dependencies": {
+    "xmlbuilder2": "^3.0.2"
+  }
+}

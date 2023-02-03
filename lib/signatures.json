@@ -1,0 +1,101 @@
+[
+  {
+  "schema": "proca:action:2",
+  "actionId": 240,
+  "actionPageId": 76,
+  "actionPage": {
+    "id": 76,
+    "locale": "pl",
+    "name": "fur_free_europe/fundacja_viva",
+    "thankYouTemplateRef": null
+  },
+  "campaignId": 1,
+  "action": {
+    "actionType": "support",
+    "customFields": {},
+    "createdAt": "2022-05-18T00:19:01"
+  },
+  "contact": {
+    "contactRef": "efBxVdH2JM1O5sIL1tMMRGkbDvMiw211eMGOSHWhCDw",
+    "firstName": "Jane",
+    "email": null,
+    "area": "PL",
+    "lastName": "Doe",
+    "nationality": {
+      "country": "PL",
+      "documentNumber": "12345678910",
+      "documentType": "national.id.number"
+    }
+  },
+  "campaign": {
+    "externalId": null,
+    "id": 1,
+    "name": "fur_free_europe",
+    "title": "Stop Settlements"
+  },
+  "tracking": {
+    "campaign": "unknown",
+    "content": "",
+    "medium": "unknown",
+    "source": "unknown"
+  },
+  "privacy": {
+    "withConsent": true,
+    "optIn": false,
+    "givenAt": "2022-05-18T00:19:01",
+    "emailStatus": null,
+    "emailStatusChanged": null
+  },
+  "stage": "deliver"
+},
+{
+  "schema": "proca:action:2",
+  "actionId": 244,
+  "actionPageId": 70,
+  "actionPage": {
+    "id": 70,
+    "locale": "fi",
+    "name": "fur_free_europe/animaliary",
+    "thankYouTemplateRef": null
+  },
+  "campaignId": 1,
+  "action": {
+    "actionType": "support",
+    "customFields": {},
+    "createdAt": "2022-05-18T03:40:40"
+  },
+  "contact": {
+    "contactRef": "UUbKdXiaugymHpVlrieV85YrXpbF1AhnRwPn3XkX7qA",
+    "firstName": "Jane",
+    "email": null,
+    "area": "FI",
+    "birthDate": "1988-05-23",
+    "city": "Helsinki",
+    "country": "FI",
+    "lastName": "DOE",
+    "nationality": { "country": "FI" },
+    "postcode": "00500",
+    "street": "Streetname 4"
+  },
+  "campaign": {
+    "externalId": null,
+    "id": 1,
+    "name": "fur_free_europe",
+    "title": "Stop Settlements"
+  },
+  "tracking": {
+    "campaign": "unknown",
+    "content": "",
+    "medium": "unknown",
+    "source": "unknown"
+  },
+  "privacy": {
+    "withConsent": true,
+    "optIn": false,
+    "givenAt": "2022-05-18T03:40:40",
+    "emailStatus": null,
+    "emailStatusChanged": null
+  },
+  "stage": "deliver"
+}
+]
