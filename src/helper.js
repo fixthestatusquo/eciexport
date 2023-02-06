@@ -15,7 +15,7 @@ const signatures = () => {
       arr.push(
         {
           "submissionDate": signature.action.createdAt,
-          "signatureIdentifier": signature.actionId,
+          "signatureIdentifier": signature.contact.contactRef,
           "annexRevision": 1,
           "signatoryInfo": {
             "groups": {
