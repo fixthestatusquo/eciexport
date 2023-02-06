@@ -3,34 +3,24 @@ import fs from 'fs';
 import { parse } from "js2xmlparser";
 // import { json } from "./helper.js";
 import * as readline from 'node:readline';
-
+import { transform } from './transform.js';
 
 const input =  fs.createReadStream(
     new URL('../data/sample.jsonl', import.meta.url)
 )
 
-const output = fs.createWriteStream(
-  new URL('../data/output.xml', import.meta.url)
-);
-
-console.log("fileeee", input)
+const url = (file = "output") => {
+  return new URL(`../data/${file}.xml`, import.meta.url);
+};
 
 const readFile = readline.createInterface({
   input: input,
-  output: output,
+  output: fs.createWriteStream(url()),
   terminal: false
 });
 
-const transform = line => {
-  console.log("linee", line);
-}
-
 readFile
   .on('line', transform)
-  .on('close', function() {
+  .on('close', function () {
     console.log(`Created "${this.output.path}"`);
   });
-
-
-//const xml = parse("supportForm", json);
-// console.log(xml);
