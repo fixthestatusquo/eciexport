@@ -6,17 +6,6 @@ const jsonSignatures = JSON.parse(
     )
 );
 
-const array = () => {
-  const arr = [];
-  for(const object of jsonSignatures) {
-  arr.push(object);
-}
-return arr;
-}
-
-
-const a = array();
-
 const country = "pl";
 
 const signatures = () => {
