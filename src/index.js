@@ -1,8 +1,7 @@
 
 import { readFile } from 'fs/promises';
-const json = JSON.parse(
-  await readFile(
-    new URL('../lib/signatures.json', import.meta.url)
-  )
-);
-console.log(json)
+import { parse } from "js2xmlparser";
+import { json } from "./helper.js";
+
+const xml = parse("supportForm", json);
+console.log(xml);
