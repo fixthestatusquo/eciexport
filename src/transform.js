@@ -105,4 +105,5 @@ const country = JSON.parse(signature).contact.nationality.country.toLowerCase()
 export const transform = line => {
   const xml = parse("signature", signatureJson(line)).split("&lt;").join("<").split("&gt;").join(">");
   console.log("xml", xml);
+  return xml;
 }
