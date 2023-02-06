@@ -26,33 +26,24 @@ const signatures = () => {
                     "property": [
                       {
                         "key": "oct.property.street",
-                        "value": {
-                          "__cdata": signature.contact.street
-                        }
+                        "value": `<![CDATA[${signature.contact.street}]]>`
                       },
                       {
                         "key": "oct.property.street.number",
-                        "value": {
-                          "__cdata": "18"
-                        }
-                      },
+                        "value": `<![CDATA[${signature.contact.streetNumber}]]>`
+                        },
                       {
                         "key": "oct.property.postal.code",
-                        "value": {
-                          "__cdata": signature.contact.postalcode
-                        }
-                      },
+                        "value": `<![CDATA[${signature.contact.postalcode}]]>`
+                        },
+
                       {
                         "key": "oct.property.city",
-                        "value": {
-                          "__cdata": signature.contact.city
-                        }
-                      },
+                        "value": `<![CDATA[${signature.contact.city}]]>`
+                        },
                       {
                         "key": "oct.property.country",
-                        "value": {
-                          "__cdata": signature.contact.nationality.country
-                        }
+                        "value": `<![CDATA[${signature.contact.country}]]>`
                       }
                     ]
                   }
@@ -63,21 +54,15 @@ const signatures = () => {
                     "property": [
                       {
                         "key": "oct.property.full.first.names",
-                        "value": {
-                          "__cdata": signature.contact.firstName
-                        }
+                        "value": `<![CDATA[${signature.contact.firstName}]]>`
                       },
                       {
                         "key": "oct.property.family.names",
-                        "value": {
-                          "__cdata": signature.contact.lastName
-                        }
+                        "value": `<![CDATA[${signature.contact.lastName}]]>`
                       },
                       {
                         "key": "oct.property.date.of.birth",
-                        "value": {
-                          "__cdata": signature.contact.birthDate
-                        }
+                        "value": `<![CDATA[${signature.contact.birthDate}]]>`
                       }
                     ]
                   }
