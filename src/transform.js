@@ -96,13 +96,12 @@ const groupId = (signature) => {
 };
 
 const signatureJson = (signature) => {
-
   const country = signature.contact.nationality.country.toLowerCase();
   const groups = address.includes(country)
     ? groupAddress(signature)
     : groupId(signature);
   return {
-    submissionDate: signature.action.createdAt.substring(0,10),
+    submissionDate: signature.action.createdAt.substring(0, 10),
     signatureIdentifier: signature.contact.contactRef,
     annexRevision: 1,
     signatoryInfo: {
@@ -114,7 +113,6 @@ const signatureJson = (signature) => {
 export const transform = (line) => {
   const xml = parse("signature", signatureJson(line), options);
   //what does it do? .split("&lt;").join("<").split("&gt;").join(">");
-  if (config.verbose)  
-    console.log(xml);
+  if (config.verbose) console.log(xml);
   return xml;
 };
