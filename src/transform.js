@@ -1,109 +1,120 @@
 import { parse } from "js2xmlparser";
 
 const address = ["de", "dk", "fi", "fr", "gr", "ie", "lu", "nl", "sk"];
-
+const options = {
+  cdataKeys: ["value"],
+  declaration: { include: false },
+  format: { pretty: true, indent: "  " },
+};
 const groupAddress = (signature) => {
   return {
-    "group": [
+    group: [
       {
-        "name": "oct.group.address",
-        "properties": {
-          "property": [
+        name: "oct.group.address",
+        properties: {
+          property: [
             {
-              "key": "oct.property.street",
-              "value": `<![CDATA[${JSON.parse(signature).contact.street}]]>`
+              key: "oct.property.street",
+              value: signature.contact.street,
             },
-            {
+            /*            {
               "key": "oct.property.street.number",
-              "value": `<![CDATA[${JSON.parse(signature).contact.streetNumber}]]>`
+              "value": ""
             },
+*/
             {
-              "key": "oct.property.postal.code",
-              "value": `<![CDATA[${JSON.parse(signature).contact.postalcode}]]>`
+              key: "oct.property.postal.code",
+              value: signature.contact.postcode,
             },
 
             {
-              "key": "oct.property.city",
-              "value": `<![CDATA[${JSON.parse(signature).contact.city}]]>`
+              key: "oct.property.city",
+              value: signature.contact.city,
             },
             {
-              "key": "oct.property.country",
-              "value": `<![CDATA[${JSON.parse(signature).contact.country}]]>`
-            }
-          ]
-        }
+              key: "oct.property.country",
+              value: signature.contact.country,
+            },
+          ],
+        },
       },
       {
-        "name": "oct.group.general",
-        "properties": {
-          "property": [
+        name: "oct.group.general",
+        properties: {
+          property: [
             {
-              "key": "oct.property.full.first.names",
-              "value": `<![CDATA[${JSON.parse(signature).contact.firstName}]]>`
+              key: "oct.property.full.first.names",
+              value: signature.contact.firstName,
             },
             {
-              "key": "oct.property.family.names",
-              "value": `<![CDATA[${JSON.parse(signature).contact.lastName}]]>`
+              key: "oct.property.family.names",
+              value: signature.contact.lastName,
             },
             {
-              "key": "oct.property.date.of.birth",
-              "value": `<![CDATA[${JSON.parse(signature).contact.birthDate}]]>`
-            }
-          ]
-        }
-      }
-    ]
-  }
+              key: "oct.property.date.of.birth",
+              value: signature.contact.birthDate,
+            },
+          ],
+        },
+      },
+    ],
+  };
 };
 
 const groupId = (signature) => {
   return {
-    "group": [
+    group: [
       {
-        "name": "oct.group.id",
-        "properties": {
-          "property": [
+        name: "oct.group.id",
+        properties: {
+          property: [
             {
-              "key": "oct.property.personal.id",
-              "value": `<![CDATA[${JSON.parse(signature).contact.nationality.documentNumber}]]>`
-            }
-          ]
-        }
+              key: "oct.property.personal.id",
+              value: signature.contact.nationality.documentNumber,
+            },
+          ],
+        },
       },
       {
-        "name": "oct.group.general",
-        "properties": {
-          "property": [
+        name: "oct.group.general",
+        properties: {
+          property: [
             {
-              "key": "oct.property.full.first.names",
-              "value": `<![CDATA[${JSON.parse(signature).contact.firstName}]]>`
+              key: "oct.property.full.first.names",
+              value: signature.contact.firstName,
             },
             {
-              "key": "oct.property.family.names",
-              "value": `<![CDATA[${JSON.parse(signature).contact.lastName}]]>`
-            }
-          ]
-        }
-      }
-    ]
-  }
+              key: "oct.property.family.names",
+              value: signature.contact.lastName,
+            },
+          ],
+        },
+      },
+    ],
+  };
 };
 
-const signatureJson = (signature) => {
-const country = JSON.parse(signature).contact.nationality.country.toLowerCase()
-  const groups = address.includes(country) ? groupAddress(signature) : groupId(signature);
+const signatureJson = (line) => {
+  if (!line) return {};
+  const signature = JSON.parse(line);
+
+  const country = signature.contact.nationality.country.toLowerCase();
+  const groups = address.includes(country)
+    ? groupAddress(signature)
+    : groupId(signature);
   return {
-    "submissionDate": JSON.parse(signature).action.createdAt,
-    "signatureIdentifier": JSON.parse(signature).contact.contactRef,
-    "annexRevision": 1,
-    "signatoryInfo": {
-      "groups": groups
-    }
-  }
+    submissionDate: signature.action.createdAt.substring(0,10),
+    signatureIdentifier: signature.contact.contactRef,
+    annexRevision: 1,
+    signatoryInfo: {
+      groups: groups,
+    },
+  };
 };
 
-export const transform = line => {
-  const xml = parse("signature", signatureJson(line)).split("&lt;").join("<").split("&gt;").join(">");
-  console.log("xml", xml);
+export const transform = (line) => {
+  const xml = parse("signature", signatureJson(line), options);
+  //what does it do? .split("&lt;").join("<").split("&gt;").join(">");
+  console.log(xml);
   return xml;
-}
+};
