@@ -27,6 +27,10 @@ Object.keys(countries).forEach((iso) => {
     pathData("./data/output/" + country + ".xml")
   );
   output[country].write(header(country));
+  // output[country].on("end", () => {
+  //   console.log("here");
+  //   output[country].write(footer);
+  // });
   output[country].on("finish", () => {
     console.log(count[country], "signatures in ", country, "-> data/output");
   });
@@ -49,6 +53,7 @@ readFile
   })
   .on("close", () => {
     Object.values(output).forEach((file) => {
+      file.write(footer);
       file.end();
     });
   });
