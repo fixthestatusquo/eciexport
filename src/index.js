@@ -21,6 +21,7 @@ const url = (file = "output") => {
 
 
 const output = {};
+const count = {};
 Object.keys(countries).forEach( iso => {
   const country = iso.toUpperCase();
   if (argv["dry-run"]) {
@@ -28,12 +29,13 @@ Object.keys(countries).forEach( iso => {
     return;
   }
   output[country] = fs.createWriteStream(pathData("./output/" + country + ".xml"));
+  count[country] = 0;
 });
+
 
 
 const readFile = readline.createInterface({
   input: input,
-  output: output,
   terminal: false,
 });
 
@@ -42,9 +44,12 @@ readFile.on("line", line => {
     const signature = JSON.parse(line);
   const country = signature.contact.nationality.country;
     const xml = transform (signature);
-    console.log (xml);
+console.log(this);
     output[country].write(xml);
+    count[country]++;
   })
   .on("close", function () {
-  console.log(`Created "${this.output.path}"`);
+    Object.entries(count).forEach ( ([iso,total]) => {
+      console.log(iso,total);
+    });
 });
