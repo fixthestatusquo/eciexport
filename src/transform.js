@@ -1,4 +1,5 @@
 import { parse } from "js2xmlparser";
+import config from "./argv.js";
 
 const address = ["de", "dk", "fi", "fr", "gr", "ie", "lu", "nl", "sk"];
 const options = {
@@ -94,9 +95,7 @@ const groupId = (signature) => {
   };
 };
 
-const signatureJson = (line) => {
-  if (!line) return {};
-  const signature = JSON.parse(line);
+const signatureJson = (signature) => {
 
   const country = signature.contact.nationality.country.toLowerCase();
   const groups = address.includes(country)
@@ -115,6 +114,7 @@ const signatureJson = (line) => {
 export const transform = (line) => {
   const xml = parse("signature", signatureJson(line), options);
   //what does it do? .split("&lt;").join("<").split("&gt;").join(">");
-  console.log(xml);
+  if (config.verbose)  
+    console.log(xml);
   return xml;
 };

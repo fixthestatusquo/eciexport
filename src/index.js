@@ -1,23 +1,50 @@
 import fs from "fs";
 import { parse } from "js2xmlparser";
+import path from "path";
 // import { json } from "./helper.js";
 import * as readline from "node:readline";
 import { transform } from "./transform.js";
+import argv from "./argv.js";
+import countries from "./countries.js";
+const pathData = file => path.resolve(process.cwd(), "./data/"+file);
+
+const fileName = argv._[0] || "sample.jsonl";
+
 
 const input = fs.createReadStream(
-  new URL("../data/sample.jsonl", import.meta.url)
+  pathData(fileName)
 );
 
 const url = (file = "output") => {
-  return new URL(`../data/${file}.xml`, import.meta.url);
+  pathData(file)
 };
+
+
+const output = {};
+Object.keys(countries).forEach( iso => {
+  const country = iso.toUpperCase();
+  if (argv["dry-run"]) {
+    output[country] = process.stdout;
+    return;
+  }
+  output[country] = fs.createWriteStream(pathData("./output/" + country + ".xml"));
+});
+
 
 const readFile = readline.createInterface({
   input: input,
-  output: fs.createWriteStream(url()),
+  output: output,
   terminal: false,
 });
 
-readFile.on("line", transform).on("close", function () {
+readFile.on("line", line => {
+    if (!line) return {};
+    const signature = JSON.parse(line);
+  const country = signature.contact.nationality.country;
+    const xml = transform (signature);
+    console.log (xml);
+    output[country].write(xml);
+  })
+  .on("close", function () {
   console.log(`Created "${this.output.path}"`);
 });
