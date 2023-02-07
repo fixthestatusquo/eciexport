@@ -1,5 +1,6 @@
 import { parse } from "js2xmlparser";
 import config from "./argv.js";
+import { date, isValid } from "./helper.js";
 
 const address = ["de", "dk", "fi", "fr", "gr", "ie", "lu", "nl", "sk"];
 
@@ -8,10 +9,6 @@ const options = {
   declaration: { include: false },
   format: { pretty: true, indent: "  " },
 };
-
-export const date = (date) => {
-  return date.split("-").reverse().join("/");
-}
 
 const initiativeData = () => {
   const json = {
@@ -35,7 +32,17 @@ export const header = (country) => {
 export const footer = `</signatures></supportForm>`;
 
 const groupAddress = (signature) => {
-  return {
+
+  if (!isValid(signature.contact.street)
+    || !isValid(signature.contact.postcode)
+    || !isValid(signature.contact.city)
+    || !isValid(signature.contact.country)
+    || !isValid(signature.contact.firstName)
+    || !isValid(signature.contact.lastName)) {
+    throw new Error(`Missing contact data: ${JSON.stringify(signature.contact)}`);
+  }
+
+ return {
     group: [
       {
         name: "oct.group.address",
@@ -90,6 +97,12 @@ const groupAddress = (signature) => {
 };
 
 const groupId = (signature) => {
+  if (!isValid(signature.contact.nationality.documentNumber)
+    || !isValid(signature.contact.firstName)
+    || !isValid(signature.contact.lastName)) {
+    throw new Error(`Missing contact data: ${JSON.stringify(signature.contact)}`);
+  }
+
   return {
     group: [
       {
