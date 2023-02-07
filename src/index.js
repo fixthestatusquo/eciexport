@@ -1,19 +1,21 @@
 import fs from "fs";
 import { parse } from "js2xmlparser";
 import path from "path";
+import steam from "stream";
 // import { json } from "./helper.js";
 import * as readline from "node:readline";
 import { transform } from "./transform.js";
 import argv from "./argv.js";
 import countries from "./countries.js";
-const pathData = file => path.resolve(process.cwd(), "./data/"+file);
 
-const fileName = argv._[0] || "sample.jsonl";
+const pathData = file => path.resolve(process.cwd(), file);
 
+const fileName = argv._[0] || "./data/sample.jsonl";
 
 const input = fs.createReadStream(
   pathData(fileName)
 );
+
 
 const url = (file = "output") => {
   pathData(file)
