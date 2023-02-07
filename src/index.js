@@ -4,7 +4,7 @@ import path from "path";
 import steam from "stream";
 // import { json } from "./helper.js";
 import * as readline from "node:readline";
-import { transform } from "./transform.js";
+import { transform, header, footer } from "./transform.js";
 import argv from "./argv.js";
 import countries from "./countries.js";
 
@@ -16,6 +16,7 @@ const input = fs.createReadStream(pathData(fileName));
 
 const output = {};
 const count = {};
+
 Object.keys(countries).forEach((iso) => {
   const country = iso.toUpperCase();
   if (argv["dry-run"]) {
@@ -25,6 +26,7 @@ Object.keys(countries).forEach((iso) => {
   output[country] = fs.createWriteStream(
     pathData("./data/output/" + country + ".xml")
   );
+  output[country].write(header(country));
   output[country].on("finish", () => {
     console.log(count[country], "signatures in ", country, "-> data/output");
   });
