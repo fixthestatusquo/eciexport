@@ -7,6 +7,26 @@ const options = {
   declaration: { include: false },
   format: { pretty: true, indent: "  " },
 };
+
+export const header = (country) => {
+ return `<supportForm
+  ><forCountry>${country}</forCountry
+  ><initiativeData
+    ><registrationNumber>ECI(2021)000000</registrationNumber
+    ><startOfTheCollectionPeriod>2021-01-11</startOfTheCollectionPeriod
+    ><endOfTheCollectionPeriod>2022-01-11</endOfTheCollectionPeriod
+    ><urlOnCommissionRegister
+      >https://europa.eu/citizens-initiative/initiatives/details/2021/000000</urlOnCommissionRegister
+    ><title>MY INITIATIVE TITLE</title
+    ><objectives>My initiative objectives.</objectives
+    ><registeredContactPersons
+      >Elise Elise@gmail.com, Xavier Xavier@gmail.com</registeredContactPersons
+    ><url>Website of the proposed initiative</url></initiativeData
+  ><signatures>`;
+};
+
+export const footer = `</signatures></supportForm>`;
+
 const groupAddress = (signature) => {
   return {
     group: [
