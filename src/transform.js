@@ -9,6 +9,10 @@ const options = {
   format: { pretty: true, indent: "  " },
 };
 
+export const date = (date) => {
+  return date.split("-").reverse().join("/");
+}
+
 const initiativeData = () => {
   const json = {
     "registrationNumber": "ECI(2022)000002",
@@ -76,7 +80,7 @@ const groupAddress = (signature) => {
             },
             {
               key: "oct.property.date.of.birth",
-              value: signature.contact.birthDate,
+              value: date(signature.contact.birthDate),
             },
           ],
         },
