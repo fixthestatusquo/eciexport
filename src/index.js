@@ -1,8 +1,5 @@
 import fs from "fs";
-import { parse } from "js2xmlparser";
 import path from "path";
-import steam from "stream";
-// import { json } from "./helper.js";
 import * as readline from "node:readline";
 import { transform, header, footer } from "./transform.js";
 import argv from "./argv.js";
@@ -27,10 +24,6 @@ Object.keys(countries).forEach((iso) => {
     pathData("./data/output/" + country + ".xml")
   );
   output[country].write(header(country));
-  // output[country].on("end", () => {
-  //   console.log("here");
-  //   output[country].write(footer);
-  // });
   output[country].on("finish", () => {
     console.log(count[country], "signatures in ", country, "-> data/output");
   });
