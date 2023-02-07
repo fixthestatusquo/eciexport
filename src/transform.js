@@ -2,27 +2,30 @@ import { parse } from "js2xmlparser";
 import config from "./argv.js";
 
 const address = ["de", "dk", "fi", "fr", "gr", "ie", "lu", "nl", "sk"];
+
 const options = {
   cdataKeys: ["value"],
   declaration: { include: false },
   format: { pretty: true, indent: "  " },
 };
 
+const initiativeData = () => {
+  const json = {
+    "registrationNumber": "ECI(2022)000002",
+    "startOfTheCollectionPeriod": "2022-05-18",
+    "endOfTheCollectionPeriod": "2023-03-01",
+    "urlOnCommissionRegister": "https://europa.eu/citizens-initiative/initiatives/details/2022/000002",
+    "title": "FUR FREE EUROPE",
+    "objectives": "Fur farming is inherently cruel and it is widely rejected by EU citizens.\nIt is impossible to improve the welfare of animals on fur farms. Whilst no animals should live in a caged environment, the keeping of inherently wild species in cages can only be defined as abject cruelty.\nThe keeping and killing of animals solely for the purpose of fur production is ethically unacceptable.\nNumerous outbreaks of SARS-CoV-2 on mink farms have evidenced the veterinary-public health risks associated with the production of fur.\nThe existence of production bans in some Member States has a distorting impact on the market for the supply of farmed fur products. This favours traders in those Member States where there is no production ban, to the detriment of those EU countries where outright bans are already in place.\nThe placing of fur products on the internal markets of several territories and jurisdictions has already been prohibited. This includes dog and cat fur within the EU.\nEchoing the calls from many Member States we, EU citizens, invite the Commission to prohibit by law, throughout the Union, the:\n- keeping and killing of animals for the sole or main purpose of fur production.\n- placement of farmed animal fur, and products containing such fur, on the EU market.",
+    "registeredContactPersons": "Elise news@eurogroupforanimals.org, Agnese a.marcon@eurogroupforanimals.org",
+    "url": "https://furfreeeurope.eu"
+  }
+  return parse("initiativeData", json, options)
+}
+
 export const header = (country) => {
- return `<supportForm
-  ><forCountry>${country}</forCountry
-  ><initiativeData
-    ><registrationNumber>ECI(2021)000000</registrationNumber
-    ><startOfTheCollectionPeriod>2021-01-11</startOfTheCollectionPeriod
-    ><endOfTheCollectionPeriod>2022-01-11</endOfTheCollectionPeriod
-    ><urlOnCommissionRegister
-      >https://europa.eu/citizens-initiative/initiatives/details/2021/000000</urlOnCommissionRegister
-    ><title>MY INITIATIVE TITLE</title
-    ><objectives>My initiative objectives.</objectives
-    ><registeredContactPersons
-      >Elise Elise@gmail.com, Xavier Xavier@gmail.com</registeredContactPersons
-    ><url>Website of the proposed initiative</url></initiativeData
-  ><signatures>`;
+ return `<supportForm><forCountry>${country}</forCountry
+ >${initiativeData()}<signatures>`;
 };
 
 export const footer = `</signatures></supportForm>`;
@@ -132,7 +135,6 @@ const signatureJson = (signature) => {
 
 export const transform = (line) => {
   const xml = parse("signature", signatureJson(line), options);
-  //what does it do? .split("&lt;").join("<").split("&gt;").join(">");
   if (config.verbose) console.log(xml);
   return xml;
 };
